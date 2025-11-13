@@ -8,7 +8,7 @@ Updated by Roman Yasinovskyy, 2017
 
 import heapq
 import sys
-from typing import Any, Iterator, Union
+from typing import Any, Iterator
 
 
 class Vertex:
@@ -17,7 +17,7 @@ class Vertex:
     def __init__(self, key: Any) -> None:
         """Create new vertex"""
         self._key = key
-        self._neighbors: dict["Vertex", Union[int, None]] = {}
+        self._neighbors: dict["Vertex", int|None] = {}
         self._color = "white"
         self._distance = sys.maxsize
         self._previous = None
@@ -34,7 +34,7 @@ class Vertex:
 
     key = property(get_key)
 
-    def get_neighbor(self, other: "Vertex") -> Union[int, None]:
+    def get_neighbor(self, other: "Vertex") -> int|None:
         """Get the distance (edge weight) to an adjacent node (neighbor)"""
         return self._neighbors.get(other, None)
 
@@ -66,7 +66,7 @@ class Vertex:
 
     distance = property(get_distance, set_distance)
 
-    def get_previous(self) -> Union["Vertex", None]:
+    def get_previous(self) -> "Vertex"|None:
         """Get previous"""
         return self._previous
 
@@ -125,7 +125,7 @@ class Graph:
         """in operator override"""
         return key in self._vertices
 
-    def get_vertex(self, key: Any) -> Union["Vertex", None]:
+    def get_vertex(self, key: Any) -> "Vertex"|None:
         """Find the vertex in the graph named vert_key"""
         return self._vertices.get(key, None)
 
@@ -206,7 +206,7 @@ class Graph:
     def dijkstra(self, start: "Vertex") -> None:
         """Dijkstra's shortest path algorithm"""
         start.distance = 0
-        not_yet_visited: list[list[Union[int, "Vertex"]]] = [[start.distance, start]]
+        not_yet_visited: list[list[int|"Vertex"]] = [[start.distance, start]]
         heapq.heapify(not_yet_visited)
         while not_yet_visited:
             current_vertex = heapq.heappop(not_yet_visited)[1]
